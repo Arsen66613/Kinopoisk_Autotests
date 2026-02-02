@@ -84,5 +84,15 @@ pytest --alluredir=allure-results
 allure serve allure-results
 
 
+### Переменная окружения KINOPOISK_TOKEN
+Для запуска API-тестов требуется токен Kinopoisk API.
+Токен не хранится в репозитории и должен быть задан
+через переменную окружения KINOPOISK_TOKEN.
+
+Windows (PowerShell) -> $env:KINOPOISK_TOKEN="ваш_api_токен"
+Windows (cmd) -> set KINOPOISK_TOKEN=ваш_api_токен
+Linux / macOS -> export KINOPOISK_TOKEN=ваш_api_токен
+
+
 ### Полезные ссылки
 - [Подсказка по markdown](https://www.markdownguide.org/basic-syntax/)
