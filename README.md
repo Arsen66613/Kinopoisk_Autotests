@@ -60,7 +60,9 @@ API:
 
 В проекте:
 используется один браузер на всю UI-сессию
+
 применяются явные ожидания (WebDriverWait)
+
 логика тестов не зависит от sleep
 
 
@@ -68,29 +70,36 @@ API:
 В проекте используются два файла conftest.py:
 
 test/conftest.py — общие фикстуры
+
 test/ui/conftest.py — UI-специфичные фикстуры
 
 Такое разделение:
+
 предотвращает влияние UI-фикстур на API-тесты
+
 ограничивает область видимости фикстур pytest
+
 упрощает поддержку и масштабирование проекта
 
 
 ### Запуск тестов
 UI-тесты: pytest -m ui
+
 API-тесты: pytest -m api
+
 Все тесты: pytest
 
 
 ### Allure-отчёт
 pytest --alluredir=allure-results
+
 allure serve allure-results
 
 
 ### Переменная окружения KINOPOISK_TOKEN
 Документация для API-тестов https://api.poiskkino.dev/documentation#/
 
-Для запуска API-тестов требуется токен Kinopoisk API. 
+Для запуска API-тестов требуется токен Kinopoisk API, который вы можете получить в боте @poiskkinodev_bot.
 
 Токен не хранится в репозитории и должен быть задан
 через переменную окружения KINOPOISK_TOKEN.
