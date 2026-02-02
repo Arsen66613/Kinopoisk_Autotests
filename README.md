@@ -85,12 +85,17 @@ allure serve allure-results
 
 
 ### Переменная окружения KINOPOISK_TOKEN
+Документация для API-тестов https://api.poiskkino.dev/documentation#/
+
 Для запуска API-тестов требуется токен Kinopoisk API.
+
 Токен не хранится в репозитории и должен быть задан
 через переменную окружения KINOPOISK_TOKEN.
 
 Windows (PowerShell) -> $env:KINOPOISK_TOKEN="ваш_api_токен"
+
 Windows (cmd) -> set KINOPOISK_TOKEN=ваш_api_токен
+
 Linux / macOS -> export KINOPOISK_TOKEN=ваш_api_токен
 
 
