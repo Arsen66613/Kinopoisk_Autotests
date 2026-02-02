@@ -1,12 +1,26 @@
-def pytest_configure(config) -> None:
+import pytest
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
+
+@pytest.fixture(scope="session")
+def driver():
     """
-    Регистрация маркеров pytest
+    Инициализация Chrome WebDriver.
+    Один браузер на всю UI-сессию.
     """
-    config.addinivalue_line(
-        "markers",
-        "ui: UI tests"
+    options = Options()
+    options.add_argument("--start-maximized")
+
+    service = Service()
+
+    driver = webdriver.Chrome(
+        service=service,
+        options=options
     )
-    config.addinivalue_line(
-        "markers",
-        "api: API tests"
-    )
+
+    yield driver
+
+    driver.quit()

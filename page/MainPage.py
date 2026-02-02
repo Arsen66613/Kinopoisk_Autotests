@@ -7,17 +7,13 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class MainPage:
     """
-    Page Object страницы 'Фильмы в кино'
+    Page Object страницы "Фильмы в кино"
     """
-
-    # ===== ЯКОРЬ СТРАНИЦЫ =====
 
     MOVIE_LIST = (
         By.XPATH,
         "//div[contains(@class, 'styles_root')]"
     )
-
-    # ===== ССЫЛКИ-ФИЛЬТРЫ =====
 
     HIGH_RATING = (
         By.XPATH,
@@ -34,18 +30,18 @@ class MainPage:
         "//a[contains(@href, 'b=foreign')]"
     )
 
-    # ===== СЕЛЕКТЫ =====
-
     GENRE_SELECT = (
         By.XPATH,
-        "//span[text()='Все жанры' or text()='Аниме']"
-        "/ancestor::div[contains(@class, 'selectButton')]"
+        "//summary[.='Жанры']"
+        "/following-sibling::div"
+        "//span[contains(@class, 'buttonCaption')]"
     )
 
     CITY_SELECT = (
         By.XPATH,
-        "//span[contains(text(), 'Москва') or contains(text(), 'Абакан')]"
-        "/ancestor::div[contains(@class, 'selectButton')]"
+        "//summary[.='Города']"
+        "/following-sibling::div"
+        "//span[contains(@class, 'buttonCaption')]"
     )
 
     CHECKBOX_OPTION = (
@@ -55,84 +51,96 @@ class MainPage:
 
     SELECTED_GENRE_TEXT = (
         By.XPATH,
-        "//span[contains(@class, 'buttonCaption')][text()='Аниме']"
+        "//summary[.='Жанры']"
+        "/following-sibling::div"
+        "//span[contains(@class, 'buttonCaption')]"
     )
 
     SELECTED_CITY_TEXT = (
         By.XPATH,
-        "//span[contains(@class, 'buttonCaption')][text()='Абакан']"
+        "//summary[.='Города']"
+        "/following-sibling::div"
+        "//span[contains(@class, 'buttonCaption')]"
     )
-
-    # ===== КОНСТРУКТОР =====
 
     def __init__(self, driver: WebDriver) -> None:
         self.driver = driver
         self.wait = WebDriverWait(driver, 30)
 
-    # ===== БАЗОВЫЕ МЕТОДЫ =====
-
     @allure.step("Открыть страницу фильмов в кино")
     def open(self, url: str) -> None:
         self.driver.get(url)
-        self.wait_page_loaded()
-
-    @allure.step("Дождаться загрузки списка фильмов")
-    def wait_page_loaded(self) -> None:
         self.wait.until(
-            EC.presence_of_element_located(self.MOVIE_LIST)
+            EC.presence_of_element_located(
+                self.MOVIE_LIST
+            )
         )
 
-    # ===== ФИЛЬТРЫ =====
-
-    @allure.step("Фильтрация: с высоким рейтингом")
+    @allure.step("Фильтрация: фильмы с высоким рейтингом")
     def filter_by_rating(self) -> None:
         self.wait.until(
-            EC.element_to_be_clickable(self.HIGH_RATING)
+            EC.element_to_be_clickable(
+                self.HIGH_RATING
+            )
         ).click()
-        self.wait_page_loaded()
 
     @allure.step("Фильтрация: российские фильмы")
     def filter_russian_movies(self) -> None:
         self.wait.until(
-            EC.element_to_be_clickable(self.RUSSIAN_MOVIES)
+            EC.element_to_be_clickable(
+                self.RUSSIAN_MOVIES
+            )
         ).click()
-        self.wait_page_loaded()
+
+    @allure.step("Фильтрация: зарубежные фильмы")
+    def filter_foreign_movies(self) -> None:
+        self.wait.until(
+            EC.element_to_be_clickable(
+                self.FOREIGN_MOVIES
+            )
+        ).click()
 
     @allure.step("Фильтрация по жанру: {genre}")
     def filter_by_genre(self, genre: str) -> None:
         self.wait.until(
-            EC.element_to_be_clickable(self.GENRE_SELECT)
+            EC.element_to_be_clickable(
+                self.GENRE_SELECT
+            )
         ).click()
 
         option = (
             self.CHECKBOX_OPTION[0],
-            self.CHECKBOX_OPTION[1].format(value=genre)
+            self.CHECKBOX_OPTION[1].format(
+                value=genre
+            )
         )
 
         self.wait.until(
-            EC.element_to_be_clickable(option)
+            EC.element_to_be_clickable(
+                option
+            )
         ).click()
-
-        self.wait_page_loaded()
 
     @allure.step("Фильтрация по городу: {city}")
     def filter_by_city(self, city: str) -> None:
         self.wait.until(
-            EC.element_to_be_clickable(self.CITY_SELECT)
+            EC.element_to_be_clickable(
+                self.CITY_SELECT
+            )
         ).click()
 
         option = (
             self.CHECKBOX_OPTION[0],
-            self.CHECKBOX_OPTION[1].format(value=city)
+            self.CHECKBOX_OPTION[1].format(
+                value=city
+            )
         )
 
         self.wait.until(
-            EC.element_to_be_clickable(option)
+            EC.element_to_be_clickable(
+                option
+            )
         ).click()
-
-        self.wait_page_loaded()
-
-    # ===== ГЕТТЕРЫ =====
 
     @allure.step("Получить выбранный жанр")
     def get_selected_genre(self) -> str:
