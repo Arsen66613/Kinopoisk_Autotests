@@ -94,7 +94,9 @@ allure serve allure-results
 через переменную окружения KINOPOISK_TOKEN.
 
 - Windows (PowerShell) -> $env:KINOPOISK_TOKEN="api_токен"
+
 - Windows (cmd) set -> KINOPOISK_TOKEN=api_токен
+
 - Linux / macOS export -> KINOPOISK_TOKEN=api_токен
 
 
